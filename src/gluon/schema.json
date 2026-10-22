@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "urn:gluon:schema:0.0.1a3",
+  "$id": "urn:gluon:schema:0.1.0",
   "title": "Gluon discovery protocol (experimental)",
   "description": "Calls: describe(scope) -> ScopeDescription (configuration plus SPARQL fragments; never touches the graph); probe(scope, type, text|iri[, filters, snapshot]) -> ProbeReport where text is one expression or a list of alternatives; inspect(scope, iri[, profile | direction, predicate][, snapshot]) -> InspectReport; inspect_many(scope, iris, ...) -> {scope, snapshot, reports}; labels(scope, iris[, snapshot]) -> LabelsReport; replay(record[, snapshot]) re-executes a stored search record; diff_reports(before, after) lists added/removed matches. Reuse a term id from describe as probe.type. A no_match outcome with complete=true is absence of evidence in this scope and snapshot, never proof of nonexistence. Qualifier names and values are opaque host data; null means not recorded in this snapshot. Every report carries the complete scoped SELECT it executed (query) and a self-contained record a host can store and replay.",
   "protocol": {

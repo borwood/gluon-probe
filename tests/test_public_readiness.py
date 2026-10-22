@@ -108,6 +108,12 @@ class PublicReadinessTests(unittest.TestCase):
 
     # --- I: loader and validate command ---------------------------------------------
 
+    def test_schema_id_tracks_the_package_version(self):
+        import gluon
+        self.assertEqual(SCHEMA["$id"], "urn:gluon:schema:" + gluon.__version__)
+        changelog = (Path(__file__).resolve().parents[1] / "CHANGELOG.md").read_text(encoding="utf-8")
+        self.assertIn("## [" + gluon.__version__ + "]", changelog)
+
     def test_json_loader_and_validate_command(self):
         with tempfile.TemporaryDirectory() as directory:
             good = Path(directory) / "good.json"

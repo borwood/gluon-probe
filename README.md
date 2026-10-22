@@ -248,6 +248,18 @@ fields, operators, unknown bindings, scopes, qualifiers or profiles, filters
 that widen, and attempts to raise host caps are rejected before any source
 access. There is no proposal or raw-query API in the core.
 
+## Versioning
+
+`MAJOR.MINOR.PATCH`, valid under SemVer and PEP 440, with one source of truth
+(`gluon.__version__`); the schema `$id` carries the same string and a release
+is a GitHub release tagged `v<version>` whose tag must match. While 0.x, MINOR
+bumps on any change to the compatibility surface (report or record keys, the
+search-record `version`, configuration keys, CLI flags) or a new operation;
+PATCH bumps for fixes, docs and performance with identical outputs. 1.0.0 comes
+when a host depends on the package in production; after that MAJOR marks
+breaking shape changes. Every release has a dated entry in
+[CHANGELOG.md](CHANGELOG.md).
+
 ## Verification and limits
 
 | Behavior | Maintained verification |

@@ -11,7 +11,7 @@ from .types import (CancelSignal, Candidate, Completeness, Configuration, Discov
                     SelectRequest, SourceUnavailableError, TermDefinition)
 from .vocabularies import COMMON_LABEL_PREDICATES, standard_profiles, standard_scope, standard_terms
 
-__version__ = "0.0.1a3"
+__version__ = "0.1.0"
 
 __all__ = [
     "COMMON_LABEL_PREDICATES", "CancelSignal", "Candidate", "Completeness", "Configuration", "Discovery", "DiscoveryError",
