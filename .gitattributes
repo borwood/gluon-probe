@@ -1,0 +1,3 @@
+# Pinned fixtures are hashed in manifests; never convert their line endings.
+*.trig text eol=lf
+experiments/wikidata/manifest.json text eol=lf

@@ -1,0 +1,46 @@
+name: publish
+
+# PyPI trusted publishing (OpenID Connect): no API token is stored anywhere.
+# PyPI publisher settings for this workflow: owner borwood, repository gluon-probe,
+# workflow name publish.yml, environment pypi. Runs when a GitHub release is published.
+
+on:
+  release:
+    types: [published]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+      - name: Install pinned development tools
+        run: python -m pip install -r requirements-dev.txt
+      - name: Install and test before building
+        run: |
+          python -m pip install --no-build-isolation -e .
+          python -X utf8 -m unittest discover -s tests -t .
+      - name: Build sdist and wheel
+        run: python -m build --no-isolation
+      - uses: actions/upload-artifact@v4
+        with:
+          name: dist
+          path: dist/
+
+  publish:
+    needs: build
+    runs-on: ubuntu-latest
+    environment: pypi
+    permissions:
+      id-token: write
+      contents: read
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          name: dist
+          path: dist/
+      - name: Publish to PyPI
+        uses: pypa/gh-action-pypi-publish@release/v1

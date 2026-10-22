@@ -1,0 +1,46 @@
+# Synthetic billing test case, not a starter ontology or product contract.
+# Both named graphs represent the same four entities. No inference required.
+@prefix ex: <https://example.org/gluon/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+
+ex:class-model {
+  ex:Surface rdfs:label "Interaction surface" .
+  ex:WebSurface rdfs:label "Surface supporting web interaction" .
+  ex:CliSurface rdfs:label "Surface supporting CLI interaction" .
+  ex:BillingWeb a ex:Surface, ex:WebSurface ;
+    rdfs:label "Billing browser interface" ; ex:onlyMode ex:Web .
+  ex:BillingCli a ex:Surface, ex:CliSurface ;
+    rdfs:label "Billing command interface" ; ex:onlyMode ex:Cli ;
+    ex:uses ex:BillingRunner .
+  ex:BillingHybrid a ex:Surface, ex:WebSurface, ex:CliSurface ;
+    rdfs:label "Billing combined interface" ; ex:uses ex:BillingRunner .
+  ex:BillingUnclassified a ex:Surface ;
+    rdfs:label "Billing legacy interface" .
+  ex:BillingRunner rdfs:label "Billing execution component" ;
+    ex:policy ex:SelectionPolicy .
+  ex:SelectionPolicy rdfs:label "Selection retention policy" ;
+    ex:retainsSelectionAcross ex:PeriodChange ; ex:evidenceStatus ex:Verified .
+}
+
+ex:pattern-model {
+  ex:Surface rdfs:label "Interaction surface" .
+  ex:exposes rdfs:label "Exposes an interaction channel" .
+  ex:mode rdfs:label "Interaction mode of a channel" .
+  ex:BillingWeb a ex:Surface ; rdfs:label "Billing browser interface" ;
+    ex:onlyMode ex:Web ; ex:exposes ex:BrowserChannel .
+  ex:BillingCli a ex:Surface ; rdfs:label "Billing command interface" ;
+    ex:onlyMode ex:Cli ; ex:exposes ex:TerminalChannel ; ex:uses ex:BillingRunner .
+  ex:BillingHybrid a ex:Surface ; rdfs:label "Billing combined interface" ;
+    ex:exposes ex:BrowserChannel, ex:TerminalChannel ; ex:uses ex:BillingRunner .
+  ex:BillingUnclassified a ex:Surface ; rdfs:label "Billing legacy interface" .
+  ex:BrowserChannel ex:mode ex:Web .
+  ex:TerminalChannel ex:mode ex:Cli .
+  ex:BillingRunner rdfs:label "Billing execution component" ;
+    ex:policy ex:SelectionPolicy .
+  ex:SelectionPolicy rdfs:label "Selection retention policy" ;
+    ex:retainsSelectionAcross ex:PeriodChange ; ex:evidenceStatus ex:Verified .
+}
+
+# ex:onlyMode explicitly records exclusivity in this fixture. Missing other
+# modes does not establish exclusivity. Verified is a fixture assertion, not
+# independent proof that an implementation behaves correctly.

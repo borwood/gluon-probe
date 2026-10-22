@@ -1,0 +1,6 @@
+# Development and verification pins for the Python library. The core has no runtime dependencies.
+rdflib==7.1.4
+pyparsing==3.2.3
+build==1.6.1
+setuptools==84.2.1
+wheel==0.48.0
